@@ -1,0 +1,111 @@
+{
+  "types":[
+    {
+      "friendly_name":"Pacifist Archer",
+      "cost":10,
+      "visualize_lines":1,
+      "attack":
+      {
+          "cooldown": 0,
+          "damage": 0,
+          "inner_radius": 0,
+          "outer_radius": 0,
+          "target_limit":-1
+      }
+    },
+    {
+      "friendly_name":"Generic",
+      "cost":100,
+      "visualize_lines":1,
+      "attack":
+      {
+          "cooldown": 5,
+          "damage": 30,
+          "inner_radius": 0,
+          "outer_radius": 50,
+          "target_limit":3
+      }
+    },
+    {
+      "friendly_name":"Sniper",
+      "cost":500,
+      "visualize_lines":1,
+      "attack":
+      {
+          "cooldown": 30,
+          "damage": 100,
+          "inner_radius": 0,
+          "outer_radius": 500,
+          "target_limit":1
+      }
+    },
+    {
+      "friendly_name":"Tesla coil",
+      "cost":500,
+      "visualize_lines":1,
+      "attack":
+      {
+          "cooldown": 1,
+          "damage": 1,
+          "inner_radius": 0,
+          "outer_radius": 50,
+          "target_limit":0
+      }
+    },
+
+    {
+      "friendly_name":"Cannon",
+      "cost":300,
+      "visualize_lines":1,
+      "attack":
+      {
+          "cooldown": 30,
+          "damage": 300,
+          "inner_radius": 0,
+          "outer_radius": 200,
+          "target_limit":1
+      }
+    },
+
+    {
+      "friendly_name":"Nuke Factory",
+      "cost":10000,
+      "visualize_lines":0,
+      "attack":
+      {
+          "cooldown": 900,
+          "damage": 1000,
+          "inner_radius": 0,
+          "outer_radius": 1000,
+          "target_limit": 1000
+      }
+    },
+
+    {
+      "friendly_name":"Tack Shooter",
+      "cost":200,
+      "visualize_lines":1,
+      "attack":
+      {
+          "cooldown": 15,
+          "damage": 20,
+          "inner_radius": 0,
+          "outer_radius": 75,
+          "target_limit": 0
+      }
+    },
+    {
+      "friendly_name":"Lazer Beam",
+      "cost":2000,
+      "visualize_lines":1,
+      "attack":
+      {
+          "cooldown": 1,
+          "damage": 10,
+          "inner_radius": 0,
+          "outer_radius": 1000,
+          "target_limit": 1
+      }
+    }
+  ]
+}
