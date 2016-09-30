@@ -15,6 +15,7 @@ var buy_menu;
 var mouse_was_down = false;
 var touched_for_frames = 0;
 var touch_in_progress = false;
+var pew_sound;
 
 var Grid = {
 	money: 1000000000000000, //changed in setup anyways, high number to allow for lots of towers in setup
@@ -459,6 +460,7 @@ function runner(construct_type) { //obj constructor for all runners
 						towers[Grid.damageMap[this.gridX][this.gridY][i]].attack.counter++; //add to the tower's attackCounter
 						towers[Grid.damageMap[this.gridX][this.gridY][i]].visualize(this.gridX*tileSize+this.gridXoff,this.gridY*tileSize+this.gridYoff,true);// do the lazer!
 						this.raw_sustain_hit(towers[Grid.damageMap[this.gridX][this.gridY][i]].attack.damage); //autochecks and will kill if < 0 health
+						pew_sound.play();
 					}
 				}
 			} else {
@@ -618,6 +620,7 @@ function mouseClicked() {//p5
 }
 function preload(){
 	tower_JSON = loadJSON("/tower_properties.json");
+	pew_sound = loadSound('/PEW.ogg');
 }
 function setup() {//p5
 	createCanvas(950, 600);
