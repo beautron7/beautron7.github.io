@@ -13,6 +13,8 @@ var health_factor_accel = 0.01;
 var tower_JSON;
 var buy_menu;
 var mouse_was_down = false;
+var touched_for_frames = 0;
+var touch_in_progress = false;
 
 var Grid = {
 	money: 1000000000000000, //changed in setup anyways, high number to allow for lots of towers in setup
@@ -273,46 +275,49 @@ var Grid = {
 		var buy_mouseX = convertCanvasBuy(mouseX,mouseY).x;
 		var buy_mouseY = convertCanvasBuy(mouseX,mouseY).y;
 		buy_menu.rectMode(CORNER);
-		buy_menu.strokeWeight(0.25);
+		buy_menu.strokeWeight(0.25*3);
 		buy_menu.background(200,255,255);
-		buy_menu.textSize(4);
+		buy_menu.textSize(4*3);
 		var n;
-		for(n = 0; n < tower_JSON.types.length; n++){
-			if(collidePointRect(buy_mouseX,buy_mouseY,2,n*20+9,46,15)){
+		for(n = 0; n < tower_JSON.types.length; n++)
+		{
+			if(collidePointRect(buy_mouseX*3,buy_mouseY*3,2*3,(n*20+9)*3,46*3,15*3)){
 				buy_menu.fill(255,255,20);
-				if(mouseIsPressed){
+				if((mouseIsPressed)||(touchIsDown)){
 					newTowerTypeJSON = n;
 				}
 			} else {
 				buy_menu.fill(255)
 			}
-			buy_menu.rect(2,n*20+9,46,15);
+			buy_menu.rect(2*3,(n*20+9)*3,46*3,15*3);
 			buy_menu.fill(0);
-			buy_menu.text(tower_JSON.types[n].friendly_name,4,n*20+14);
-			buy_menu.text("Cost: "+tower_JSON.types[n].cost,4,n*20+21);
+			buy_menu.text(tower_JSON.types[n].friendly_name,4*3,3*(n*20+14));
+			buy_menu.text("Cost: "+tower_JSON.types[n].cost,4*3,3*(n*20+21));
 			if (newTowerTypeJSON==n){
 				buy_menu.fill(0,0,255);
-				buy_menu.text("Selected",30,n*20+21);
+				buy_menu.text("Selected",30*3,(n*20+21)*3);
 			}
 		}
 		var remove_tower = false;
 		if(towers.length > 0){
-			if(collidePointRect(buy_mouseX,buy_mouseY,2,n*20+9,46,15)){
+			if(collidePointRect(buy_mouseX*3,buy_mouseY*3,2*3,3*(n*20+9),3*46,3*15)){
 				buy_menu.fill(255,255,20);
-				if(mouseIsPressed&&(!mouse_was_down)){
+				if(
+					((mouseIsPressed)||(touchIsDown))&&(!mouse_was_down)
+				){
 					Grid.money+=towers[towers.length-1].cost;
 					remove_tower = true;
 					mouse_was_down = true;
-				} else if (!(mouseIsPressed)) {
+				} else if ((!(mouseIsPressed))&&(!(touchIsDown))) {
 					mouse_was_down = false;
 				}
 			} else {
 				buy_menu.fill(255);
 			}
-			buy_menu.rect(2,n*20+9,46,15);
+			buy_menu.rect(2*3,3*(n*20+9),3*(46),3*(15));
 			buy_menu.fill(0);
-			buy_menu.text("Undo last tower",4,n*20+14);
-			buy_menu.text("Sell for: "+towers[towers.length-1].cost,4,n*20+21);
+			buy_menu.text("Undo last tower",4*3,3*(n*20+14));
+			buy_menu.text("Sell for: "+towers[towers.length-1].cost,3*4,(n*20+21)*3);
 			if(remove_tower){
 				for(var i = 0; i < Grid.borders.x; i++){
 					for(var j = 0; j < Grid.borders.y; j++){
@@ -324,8 +329,9 @@ var Grid = {
 				towers = towers.slice(0,-1);
 			}
 		}
-		buy_menu.ellipse((mouseX-800)/3,mouseY/3,1);
-		image(buy_menu,800,0,150,600);
+		buy_menu.ellipse(mouseX-800,mouseY,3);
+		imageMode(CORNERS);
+		image(buy_menu,800,0,width,height);
 		pop()
 	}
 };
@@ -451,7 +457,6 @@ function runner(construct_type) { //obj constructor for all runners
 					if(collideRectCircle(this.gridX*tileSize+this.gridXoff-tileSize/16,this.gridY*tileSize+this.gridYoff-tileSize/16,tileSize/8,tileSize/8,towers[Grid.damageMap[this.gridX][this.gridY][i]].gridX*tileSize+tileSize/2,towers[Grid.damageMap[this.gridX][this.gridY][i]].gridY*tileSize+tileSize/2,towers[Grid.damageMap[this.gridX][this.gridY][i]].attack.outer_radius*2)){
 					//does the runner collide with the tower's damage zone?
 						towers[Grid.damageMap[this.gridX][this.gridY][i]].attack.counter++; //add to the tower's attackCounter
-						confirm("tower:"+Grid.damageMap[this.gridX][this.gridY][i]+" now"+towers[Grid.damageMap[this.gridX][this.gridY][i]].attack.counter);
 						towers[Grid.damageMap[this.gridX][this.gridY][i]].visualize(this.gridX*tileSize+this.gridXoff,this.gridY*tileSize+this.gridYoff,true);// do the lazer!
 						this.raw_sustain_hit(towers[Grid.damageMap[this.gridX][this.gridY][i]].attack.damage); //autochecks and will kill if < 0 health
 					}
@@ -617,7 +622,7 @@ function preload(){
 function setup() {//p5
 	createCanvas(950, 600);
 	Grid.initialize();
-	buy_menu = createGraphics(150,height);
+	buy_menu = createGraphics(150*3,height*3);
 	frameRate(15);
 	for(var o = 0; o < 4; o++){
 			Grid.addSpawn(0, o);
@@ -657,6 +662,18 @@ function draw() {//p5
 	updateRunners();
 	spawn_runners();
 	if(mouseIsPressed){
+		mouseClicked();
+	}
+	if(touch_in_progress){
+		touched_for_frames++;
+	}
+}
+function touchStarted(){
+	touch_in_progress = true;
+}
+function touchEnded(){
+	touch_in_progress = false;
+	if(touched_for_frames<3){
 		mouseClicked();
 	}
 }
