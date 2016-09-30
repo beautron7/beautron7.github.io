@@ -622,8 +622,8 @@ function preload(){
 function setup() {//p5
 	createCanvas(950, 600);
 	Grid.initialize();
-	var buy_scale = prompt("Please enter the buy menu scale (if unsure, type 1)");
-	buy_menu = createGraphics(150*buy_scale,height*buy_scale);
+	pixelDensity(1)
+	buy_menu = createGraphics(150,height);
 	frameRate(15);
 	for(var o = 0; o < 4; o++){
 			Grid.addSpawn(0, o);
