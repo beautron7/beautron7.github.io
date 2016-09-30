@@ -622,8 +622,8 @@ function preload(){
 function setup() {//p5
 	createCanvas(950, 600);
 	Grid.initialize();
-	pixelDensity(1)
-	buy_menu = createGraphics(150,height);
+	pixelDensity(3)
+	buy_menu = createGraphics(150*3,height*3);
 	frameRate(15);
 	for(var o = 0; o < 4; o++){
 			Grid.addSpawn(0, o);
