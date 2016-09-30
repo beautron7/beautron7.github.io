@@ -9,13 +9,15 @@ var flash_money = 0;
 var spawn_quanity = 1;
 var spawn_quanity_accel = 0.003;
 var health_factor = 1;
-var health_factor_accel = 0.01;
+var health_factor_accel = 0.001;
 var tower_JSON;
 var buy_menu;
 var mouse_was_down = false;
 var touched_for_frames = 0;
 var touch_in_progress = false;
 var pew_sound;
+var lives = 200;
+var flash_lives = 0;
 
 var Grid = {
 	money: 1000000000000000, //changed in setup anyways, high number to allow for lots of towers in setup
@@ -374,6 +376,17 @@ function renderAll() { //to keep draw clean, all rendering functions are kept he
 	Grid.render_buy_menu();
 	Grid.displayMoney();
 	Grid.showFps();
+	showLives();
+}
+function showLives(){
+	fill(255);
+	if(flash_lives>0){
+		if(floor(frameCount/8)%2==0){
+			fill(255,0,0);
+		}
+		flash_lives--;
+	}
+	text("Lives Left: "+lives,width,height-3);
 }
 function keyPressed() {
 	if (keyCode == 32) {
@@ -460,7 +473,7 @@ function runner(construct_type) { //obj constructor for all runners
 						towers[Grid.damageMap[this.gridX][this.gridY][i]].attack.counter++; //add to the tower's attackCounter
 						towers[Grid.damageMap[this.gridX][this.gridY][i]].visualize(this.gridX*tileSize+this.gridXoff,this.gridY*tileSize+this.gridYoff,true);// do the lazer!
 						this.raw_sustain_hit(towers[Grid.damageMap[this.gridX][this.gridY][i]].attack.damage); //autochecks and will kill if < 0 health
-						pew_sound.play();
+						// pew_sound.play();
 					}
 				}
 			} else {
@@ -492,7 +505,7 @@ function runner(construct_type) { //obj constructor for all runners
 			arr.push(Grid.routeHopsToEnd[this.gridX][this.gridY-1]); //3 = up
 		} else {arr.push(2048);}
 		this.pointing_at = arr.indexOf(min(arr));
-		if(Grid.routeHopsToEnd[this.gridX][this.gridY]===0){killRunner(this.identity);}
+		if(Grid.routeHopsToEnd[this.gridX][this.gridY]===0){lives--;flash_lives=40;killRunner(this.identity);}
 	}
 }
 function killRunner(runner_id){ //deletes a runner from runners[]. aka the runner has died.
@@ -584,8 +597,8 @@ function addRunner(typeofrunner) {//proper way to add a runner
 	runners[runners.length-1].set_pointing_at();
 	if(typeofrunner==="generic"){
 		runners[runners.length-1].speed = 2;
-		runners[runners.length-1].max_health = 100;
-		runners[runners.length-1].health = 100;
+		runners[runners.length-1].max_health = 100 * health_factor;
+		runners[runners.length-1].health = 100 * health_factor;
 	}
 	if(typeofrunner==="heavy"){
 		runners[runners.length-1].speed = 1;
@@ -594,8 +607,8 @@ function addRunner(typeofrunner) {//proper way to add a runner
 	}
 	if(typeofrunner==="scout"){
 		runners[runners.length-1].speed = 4;
-		runners[runners.length-1].max_health = 35;
-		runners[runners.length-1].health = 35;
+		runners[runners.length-1].max_health = 35 * health_factor;
+		runners[runners.length-1].health = 35 * health_factor;
 	}
 }
 function updateRunners(){//to keep draw clean
@@ -671,6 +684,8 @@ function draw() {//p5
 	if(touch_in_progress){
 		touched_for_frames++;
 	}
+	health_factor = health_factor + health_factor_accel;
+	health_factor_accel += 0.00001;
 }
 function touchStarted(){
 	touch_in_progress = true;
