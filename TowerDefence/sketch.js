@@ -619,8 +619,8 @@ function mouseClicked() {//p5
 	addTower(floor(mouseX / tileSize), floor(mouseY / tileSize), newTowerTypeJSON);
 }
 function preload(){
-	tower_JSON = loadJSON("/tower_properties.json");
-	pew_sound = loadSound('/PEW.ogg');
+	tower_JSON = loadJSON("/TowerDefence/tower_properties.json");
+	pew_sound = loadSound('/TowerDefence/PEW.ogg');
 }
 function setup() {//p5
 	createCanvas(950, 600);
