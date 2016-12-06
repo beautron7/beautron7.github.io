@@ -1,0 +1,75 @@
+==================================================================
+https://keybase.io/beautron7
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://beautron7.github.io
+  * I am beautron7 (https://keybase.io/beautron7) on keybase.
+  * I have a public key with fingerprint 0E30 D839 000A 93E3 CD89  A383 F904 8E8C 0C08 F674
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0101908b5eb07d244583eb671766b81096f3539f04016a8054c97f184c75f68bd4560a",
+            "fingerprint": "0e30d839000a93e3cd89a383f9048e8c0c08f674",
+            "host": "keybase.io",
+            "key_id": "f9048e8c0c08f674",
+            "kid": "0101908b5eb07d244583eb671766b81096f3539f04016a8054c97f184c75f68bd4560a",
+            "uid": "48ccfb63499345c7eddbc64f99f99519",
+            "username": "beautron7"
+        },
+        "revoke": {
+            "sig_ids": [
+                "ae90d08285f73532c4061e07b4d664152cdaa74cb0214ed6cfbdee3972b2e28c0f"
+            ]
+        },
+        "service": {
+            "hostname": "beautron7.github.io",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1475277623,
+    "expire_in": 157680000,
+    "prev": "6d4cd67497f3ab5e5efcb73771bc9397bfd6891c9ab8b8c03e4eed864e5712f1",
+    "seqno": 25,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.58
+Comment: https://keybase.io/crypto
+
+yMJ1AnicrVJtiFVFGL675kfbBgal26oLTZaE6zpzzpz5uCQtfYAVhRQhq+5ez8y8
+5+7ZvXvO3XPO3Y9sURP6AOlKGYjbjwxRy1SkUDCC2gzcErMiIYnslyaUYUuhsFJz
+tvoT/QwGhhme93me93nfk7fOKjQ1jJ3+arR+5dq3DZ9/PF0rrL0yxTchFZtRVNyE
++mHmgoqBNCv1hwYVESaYSCyUBwpz41DqCRcU44QzpgTBkgWu58oAU0yYL7BHteQB
+EVRzL2BCGeox7KN2FIRRGZJqEkZZTgsuNsKVGGNfuuBqI6TvCjeQmAoQGmssAsap
+LeyN07zCmlN+Ch1hbP/sozRj7z/w/7Pv2gwdFVoHirlUSpd6moMxSjMaSGmPR2QO
+TCGJ/AGwaAV+LUviiKOxdpTAUNwPebBpWLauU1Rcj3yQ2GDhCC/g1oejKWYEMFfU
+MEaJ52jj+5xqhR1CwTArbgBcyR3lgGP7DVC35baSQ6GeIc9j+rd8RznMemvqr8yq
+SZzFOq5YQG+WVdNibi4breYVw6BKf3OVVBgZOytbMQRJGsYRKhKL1FmYkxPKPYdz
+5rjtCEaqYQKlMEd4nAk7TJzrwJClZIZqYydiU3V9OwYPAq24yzlRWtpGVGCYkERL
+XwllG3KBAhjBKHicOAFBeXeDUYyKjmd9+mXLaQOM/KyWABqb+GjDTYWGpsKc2Y35
+Eheabp7/z2qnlbk32oKtS0+8uLdrZee8JfU3r75+T/0Qnlrx0zMTsPvoC7N+bj5t
+Bs79sr1Wff+JDwe3XHv5jcstfZfuXXnw1Kq3ooH977y67/tXPu36ZE98YfP0uh0H
+zz67vDJy3e/pfHBhadu6/nO37Lz7tm0Tk30XJq82N3Y9cPnI6i+2/LpmefRb28aH
+sukzdbX7SW9B9/P18eYlXw6On/x613dz+56+E3a+99Lbfvfhra2vvbvojx8m7rix
+sOf6UyQtfzZ/8fD4yLHZi4qLD+07c/HxhsbHdnUf2PHw7xd553BLR+/5w/fVWre3
+Lrv9ufsPzGs5/83eplOrzy599MdLCyaP9x19ZM+ROR9s3NxZqR+balxx1/oNbZOr
+eqp/AkzwXf4=
+=qlq/
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/beautron7
+
+==================================================================
