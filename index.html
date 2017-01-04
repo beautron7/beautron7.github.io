@@ -22,7 +22,7 @@
   </body>
   <script>
       var days_passed = (new Date()-new Date(2017,0,1))/86400000
-      var weeks_passed = floor(days_passed/7);
+      var weeks_passed = Math.floor(days_passed/7);
       days_passed%=7;
       $("#datecode").text("Today's file name: "+"W"+weeks_passed+"D"+days_passed);
   </script>
