@@ -19,7 +19,7 @@
       <br>
       <a class="btn btn-lg btn-default" id="datecode"></a>
       <br>
-      <input type="text" name="Equasion" class="inputlg" id="equasion_input" value="Enter Equasion here">
+      <input type="text" name="Equasion" class="input-lg" id="equasion_input" value="Enter Equasion here">
       <a class="btn btn-lg btn-default" id="equasion_button">Balance Equasion</a>
     </div>
     <style> body {padding: 0; margin: 0;} canvas {vertical-align: top;} </style>
@@ -30,7 +30,7 @@
       days_passed%=7;
       $("#datecode").text("Today's file name: "+"W"+weeks_passed+"D"+days_passed);
       $("#equasion_button").click(()=>{
-        this.val(chembalance($("#equasion_input").val()).message)
+        this.text(chembalance($("#equasion_input").val()).message)
       })
   </script>
 </html>
