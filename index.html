@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
+    <script src="/chem balance test.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -17,6 +18,9 @@
       <a class="btn btn-lg btn-default" href = https://github.com/Isidore-Newman-School/Beau-VanDenburgh-19/tree/master/Projects/17%20-%20Unity/Project%200/New%20Unity%20Project/Assets/Scripts>C# and Unity</a>
       <br>
       <a class="btn btn-lg btn-default" id="datecode"></a>
+      <br>
+      <input type="text" name="Equasion" class="inputlg" id="equasion_input" value="Enter Equasion here">
+      <a class="btn btn-lg btn-default" id="equasion_button">Balance Equasion</a>
     </div>
     <style> body {padding: 0; margin: 0;} canvas {vertical-align: top;} </style>
   </body>
@@ -25,5 +29,8 @@
       var weeks_passed = Math.floor(days_passed/7);
       days_passed%=7;
       $("#datecode").text("Today's file name: "+"W"+weeks_passed+"D"+days_passed);
+      $("#equasion_button").click(()={
+        this.val(chembalance($("#equasion_input").val()).message)
+      })
   </script>
 </html>
