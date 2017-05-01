@@ -1,4 +1,4 @@
-#VERSION: 0.9.0
+#VERSION: 1.0.0
 
 try:
     import sys
@@ -19,7 +19,12 @@ except ModuleNotFoundError as e :
     print("The program cannot run because the \"{x}\" module is missing from your computer.\nTo fix this, press windows + r and type 'pip install {x}', then press enter\nAfter this, restart the program\n\n".format(x=missing_module))
     raise SystemExit
 
-LOG_FILENAME = 'dump.log'
+try:
+    open("manifest.json").close()
+except FileNotFoundError:
+    print("ERROR: The application was incorrectly started (FileNotFoundError: manifest.json)")
+
+LOG_FILENAME = 'data/dump.log'
 logging.basicConfig(filename=LOG_FILENAME, level=logging.DEBUG)
 
 global own_userid
@@ -200,7 +205,7 @@ def make_db():#the db is a dict with student keys containing an array of class s
         if not confirm("Would you like to save the potentially incomlete database? (y/n)\n>>> "):
             return
     progress_bar.close()
-    file_to_save_to = open("database.pkl","wb")
+    file_to_save_to = open("data/database.pkl","wb")
     pickle.dump(database,file_to_save_to)
     file_to_save_to.close()
 
@@ -267,7 +272,7 @@ def getAssignments(classid,start, end):
     },)
 
 def load_db():
-    temp = open("database.pkl","rb")
+    temp = open("data/database.pkl","rb")
     result = pickle.load(temp)
     temp.close()
     return result
@@ -380,13 +385,13 @@ def make_pk():
                             list_of_pk.append(int(page["contents"][j]))
             break;
     print("Done! ({}) ({})".format(len(list_of_pk),len(set(list_of_pk))))
-    pkfile = open("list_of_pk.pkl","wb")
+    pkfile = open("data/list_of_pk.pkl","wb")
     pickle.dump(list(set(list_of_pk)),pkfile)
     pkfile.close()
     return list(set(list_of_pk))
 
 def load_pk():
-    temp = open("list_of_pk.pkl","rb")
+    temp = open("data/list_of_pk.pkl","rb")
     result = pickle.load(temp)
     temp.close()
     return result
@@ -430,10 +435,13 @@ def printClasses(classes):
     return response
 
 def getUser():
-    credidentials["user"] = input("\nPlease enter your username:\n>>> ")
+    response = ""
+    while response != "":
+        response = input("\nPlease enter your username:\n>>> ")
+    credidentials["user"] = response
     return credidentials["user"]
 def getPWD():
-    pwd = getpass.getpass("\nType your password here (The letters are invisible for security reasons):")
+    pwd = getpass.getpass("\nPlease type your password. The letters are not shown for security reasons.")
     credidentials["password"]=pwd
     print(">>> "+"*"*len(pwd))
     return pwd
@@ -443,7 +451,7 @@ def get_local_user_info():#the person using the program and their info.
     credidentials = dict()
     local_info_file=dict()
     try:
-        local_info_file["r"] = open("credidentials.pkl","rb")
+        local_info_file["r"] = open("data/credidentials.pkl","rb")
         pkl_file = pickle.load(local_info_file["r"])
         if "user" in pkl_file:
             if confirm("Are you {user}? (y/n)\n>>> ".format(**pkl_file)):
@@ -454,7 +462,7 @@ def get_local_user_info():#the person using the program and their info.
                 pwd = getPWD()
                 if confirm("Do you want to save your password?\n>>> "):
                     local_info_file["r"].close()
-                    local_info_file["w"]=open("credidentials.pkl","wb")
+                    local_info_file["w"]=open("data/credidentials.pkl","wb")
                     pickle.dump({
                         "user":pkl_file["user"],
                         "password":pwd
@@ -464,7 +472,7 @@ def get_local_user_info():#the person using the program and their info.
                 return
         raise FileNotFoundError
     except (FileNotFoundError,EOFError,):
-        local_info_file["w"] = open("credidentials.pkl","wb")
+        local_info_file["w"] = open("data/credidentials.pkl","wb")
         user=getUser()
         pwd=getPWD()
         if confirm("Do you want to save your password?\n>>> "):
@@ -489,7 +497,7 @@ try: #in case all else fails, make a log
     print("Loading...")
     global screen_size
     try:
-        prefs = open("config.pkl","rb")
+        prefs = open("data/config.pkl","rb")
         screen_size = pickle.load(prefs)["screen_size"]
     except FileNotFoundError: #this has the user determine the screen size by printing a bunch of $ and then going to the beginning of the line and printing a bunch of spaces.
         screen_size=30
@@ -508,7 +516,7 @@ try: #in case all else fails, make a log
         print("\n\n\nYour screen is about {} letters wide:".format(screen_size))
         print("\nEnd of your screen:  "+"="*(screen_size-22)+">")
         print("\n\n")
-        prefs = open("config.pkl","wb")
+        prefs = open("data/config.pkl","wb")
         pickle.dump({"screen_size":screen_size},prefs)
         prefs.close()
     get_local_user_info()
@@ -537,7 +545,10 @@ try: #in case all else fails, make a log
     for student in chosen_class["roster"]:
         student_id = int(student["Id"])
         if student["teacherType"] is None: #to exclude teachers. otherwise, it would say Mr Causey has a test.
-            conflicting_classes = conflicting_classes.union(database[student_id])
+            try:
+                conflicting_classes = conflicting_classes.union(database[student_id])
+            except KeyError:
+                print("The database did not contain information about student \'"+student["name"]+"\'.\nThe most likley cause of this is an incomplete database.")
         # print("student "+student["name"]+" found in the selected class. they have "+str(len(database[student_id]))+" classes")
         # print(len(conflicting_classes))
     date_chosen = [];
